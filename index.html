@@ -1,229 +1,162 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- load MUI -->
-    <link href="mui.min.css" rel="stylesheet" type="text/css" />
-    <script src="mui.min.js"></script>
-      <script src="var.js"></script>
-  </head>
-<script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DS Calculator</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load external var.js (assumed to contain weightboy, lengthboy, weightgirl, lengthgirl arrays) -->
+    <script src="var.js"></script>
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen items-center justify-center font-sans">
+    <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
+        <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Calculatrice de DS</h1>
+        <form class="space-y-6">
+            <!-- Date de visite -->
+            <div>
+                <label for="date" class="block text-sm font-medium text-gray-700">Date de visite</label>
+                <input
+                    type="date"
+                    id="date"
+                    name="visitdate"
+                    class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                >
+            </div>
 
+            <!-- Gender Selection -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Genre</label>
+                <div class="mt-2 flex space-x-4">
+                    <label class="flex items-center">
+                        <input
+                            type="radio"
+                            name="gender"
+                            id="genderboy"
+                            value="boy"
+                            checked
+                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                        >
+                        <span class="ml-2 text-gray-700">Garçon</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input
+                            type="radio"
+                            name="gender"
+                            id="gendergirl"
+                            value="girl"
+                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                        >
+                        <span class="ml-2 text-gray-700">Fille</span>
+                    </label>
+                </div>
+            </div>
 
+            <!-- Date de naissance -->
+            <div>
+                <label for="birthday" class="block text-sm font-medium text-gray-700">Date de naissance</label>
+                <input
+                    type="date"
+                    id="birthday"
+                    name="birthday"
+                    class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                >
+            </div>
 
-function monthDiff(d1, d2) {
-    var months;
-    months = (d2.getFullYear() - d1.getFullYear()) * 12;
-    months -= d1.getMonth();
-    months += d2.getMonth();
-    return months <= 0 ? 0 : months;
-}
+            <!-- Poids -->
+            <div>
+                <label for="poids" class="block text-sm font-medium text-gray-700">Poids (kg)</label>
+                <input
+                    type="number"
+                    id="poids"
+                    name="poids"
+                    step="0.1"
+                    placeholder="Entrez le poids"
+                    class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                >
+            </div>
 
-function calc(){
+            <!-- Taille -->
+            <div>
+                <label for="taille" class="block text-sm font-medium text-gray-700">Taille (cm)</label>
+                <input
+                    type="number"
+                    id="taille"
+                    name="taille"
+                    step="0.1"
+                    placeholder="Entrez la taille"
+                    class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                >
+            </div>
 
-    var date1 = new Date(document.getElementById("date").value)
-    var date2 = new Date(document.getElementById("birthday").value)
-    console.log(date1)
-    console.log(date2)
-    age = monthDiff(date2,date1)
-    console.log(age)
-    
-    
-    var p= age - 1
+            <!-- Calculate Button -->
+            <button
+                type="button"
+                onclick="calc()"
+                class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200"
+            >
+                Calculer
+            </button>
+        </form>
 
-    var genderboy=document.getElementById("genderboy").checked
-    var gendergirl=document.getElementById("gendergirl").checked
-    if(genderboy==true){
-        var wp = weightboy[p]
-        var lp = lengthboy[p]
-    }
-
-    else{
-        var wp = weightgirl[p]
-        var lp = lengthgirl[p]  
-    }
-
-    var nw= wp[1]
-    var wet = wp[2]
-
-
-    var nl = lp[1]
-    var let = lp[2]
-
-    var w = document.getElementById("poids").value
-    var l = document.getElementById("taille").value
-
-    console.log(w)
-    console.log(nw)
-    console.log(wet)
-
-    console.log(l)
-    console.log(nl);
-    console.log(let);
-
-    wds = (w - nw)/wet
-    lds = (l-nl)/let
-    console.log(wds)
-    console.log(lds)
-    document.getElementById("p").innerHTML = "poids normal : " + nw + "KG"
-    document.getElementById("t").innerHTML = "taille normale : " + nl + "CM"
-    document.getElementById("dsp").innerHTML = "DS du poids : " +wds.toFixed(2)
-    document.getElementById("dst").innerHTML = "DS de taille : "  +lds.toFixed(2)
-
-
-
-
-
-}
-
-
-
-</script>
-
-<style>
-
-.credits{
-    display: flex;
-    align-items: center;
-    margin: auto;
-    width: max-content;
-}
-
-    .wrapper{
-
-        display: flex;
-    align-items: center;
-    flex-direction: column;
-    height: max-content;
-    width: max-content;
-    margin: auto;
-    padding: 30px 60px;
-    margin-top: 15px;
-}
-    
-
-    .i{
-        margin: 10px;
-    }
-    .gender{
-        display: flex;
-        padding: 0 30px;
-    }
-
-
-    input[type="date"]{
-        background-color: #39a1f4;
-    padding: 7px;
-    font-family: "Roboto Mono",monospace;
-    color: #ffffff;
-    font-size: 15px;
-    border: none;
-    outline: none;
-    border-radius: 5px;
-}
-::-webkit-calendar-picker-indicator{
-    background-color: #ffffff;
-    padding: 5px;
-    cursor: pointer;
-    border-radius: 3px;
-}
-
-p{
-    margin: 0;
-}
-
-.results{
-    margin-top: 12px;
-    text-align: center;
-}
-
-legend{
-    font-weight: bold;
-    font-size: x-large;
-    margin-bottom: 10px;
-}
-</style>
-<body>
-
-    <div class="wrapper mui-panel">
-        <legend>calculatrice de DS</legend>
-        <p>Date de visite</p>
-    <input class ="i" type="date" name="visitdate" id="date" >
-    <div class="mui--divider-top">
-    <div class="gender">
-
-        <div class="mui-radio">
-            <label>
-              <input type="radio"
-                     name="gender"
-                     id="genderboy"
-                     value="boy"
-                     checked>
-                     Garçon
-            </label>
-          </div>
-          <div class="mui-radio">
-            <label>
-              <input type="radio"
-                     name="gender"
-                     id="gendergirl"
-                     value="girl">
-              Fille
-            </label>
-          </div>
-
-
-    <!-- <p>garcon</p>
-    <input type="radio" name="gender" id="genderboy" value="boy">
-    <p>fille</p>
-    <input type="radio" name="gender" id="gendergirl" value="girl"> -->
-</div>
-</div>
-
-<div class="mui--divider-top">
-    <P>Date de naissance</P>
-    <input class ="i" type="date" name="birthday" id="birthday"  >
-
-</div>
-
-
-    <div style="margin-top: -10px;" class="mui-textfield">
-    <input class ="i" type="text" name="poids" id="poids" placeholder="poids (kg)">
+        <!-- Results -->
+        <div class="mt-6 text-center space-y-2">
+            <p id="p" class="text-gray-600"></p>
+            <p id="t" class="text-gray-600"></p>
+            <p id="dsp" class="text-gray-600"></p>
+            <p id="dst" class="text-gray-600"></p>
+        </div>
     </div>
-    <div class="mui-textfield">
-    <input style="margin-top: -10px;" class ="i" type="text" name="taille" id="taille" placeholder="taille (cm)">
-    </div>
-    <button onclick=calc() class="mui-btn mui-btn--raised mui-btn--primary">Calculer</button>
 
-<div class="results">
-<p id="p"></p>
-<p id="t"></p>
-<p id="dsp" ></p>
-<p id="dst"></p>
+    <!-- Credits -->
+    <footer class="mt-6 text-gray-500 text-sm">
+        Made by <a href="https://www.facebook.com/so.fiz.71/" class="text-blue-600 hover:underline">Oussama Sofi</a> 💙
+    </footer>
 
-</div>
+    <script>
+        // Set today's date as default for visit date
+        const today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const yyyy = today.getFullYear();
+        document.getElementById("date").value = `${yyyy}-${mm}-${dd}`;
 
+        // Month difference calculation
+        function monthDiff(d1, d2) {
+            let months = (d2.getFullYear() - d1.getFullYear()) * 12;
+            months -= d1.getMonth();
+            months += d2.getMonth();
+            return months <= 0 ? 0 : months;
+        }
 
-    </div>
-    <div class="credits">
-<p style="margin: 12px;" >Made by <a href="https://www.facebook.com/so.fiz.71/">Oussama Sofi</a> 💙 </p> 
+        // Main calculation function
+        function calc() {
+            const date1 = new Date(document.getElementById("date").value);
+            const date2 = new Date(document.getElementById("birthday").value);
+            const age = monthDiff(date2, date1);
+            const p = age - 1;
 
+            const genderboy = document.getElementById("genderboy").checked;
+            const wp = genderboy ? weightboy[p] : weightgirl[p];
+            const lp = genderboy ? lengthboy[p] : lengthgirl[p];
 
-</div>
+            const nw = wp[1];
+            const wet = wp[2];
+            const nl = lp[1];
+            const letVal = lp[2];
 
+            const w = parseFloat(document.getElementById("poids").value);
+            const l = parseFloat(document.getElementById("taille").value);
 
+            const wds = (w - nw) / wet;
+            const lds = (l - nl) / letVal;
+
+            // Update results
+            document.getElementById("p").innerHTML = `Poids normal : ${nw} kg`;
+            document.getElementById("t").innerHTML = `Taille normale : ${nl} cm`;
+            document.getElementById("dsp").innerHTML = `DS du poids : ${wds.toFixed(2)}`;
+            document.getElementById("dst").innerHTML = `DS de taille : ${lds.toFixed(2)}`;
+        }
+    </script>
 </body>
-
-<script>
-    var today = new Date();
-var dd = String(today.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-var yyyy = today.getFullYear();
-
-today = yyyy+ "-" + mm + "-" + dd ;
-
-document.getElementById("date").value = today;
-</script>
 </html>
